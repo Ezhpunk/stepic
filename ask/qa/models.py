@@ -2,6 +2,7 @@ from django.contrib.auth.models import User,UserManager
 from django.db import models
 
 class Local_User(User):
+	#questions=models.ManyToManyField(Question)
 	objects = UserManager()
 
 class Question(models.Model):
@@ -9,11 +10,11 @@ class Question(models.Model):
 	text = models.TextField()
 	added_at = models.DateField(blank=True)
 	rating = models.IntegerField()
-	author = models.ForeignKey(Local_User)
-	likes = models.ManyToMany(Local_User)
+	author = models.ForeignKey(Local_User,related_name='author')
+	likes = models.ManyToManyField(Local_User,related_name='likes')
 
-class Answer(models.Model)
+class Answer(models.Model):
 	text = models.TextField()
 	added_at = models.DateField()
-	question = models.ForeifnKey(Question)
+	question = models.ForeignKey(Question)
 	author = models.ForeignKey(Local_User)
